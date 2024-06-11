@@ -32,8 +32,8 @@ docs_splitted = text_splitter.split_documents(docs)
 # define pinecone object
 pc = Pinecone(api_key=os.environ["PINECONE_API_KEY"])
 
+# define index and if does not exist create
 index_name = "shell"  
-
 existing_indexes = [index_info["name"] for index_info in pc.list_indexes()]
 
 if index_name not in existing_indexes:
@@ -48,25 +48,29 @@ if index_name not in existing_indexes:
 
 index = pc.Index(index_name)
 
+# add splitted documents to Pinecone
 vectorstore = PineconeVectorStore(index_name=index_name, embedding=OpenAIEmbeddings(openai_api_key=os.environ["OPENAI_API_KEY"], model="text-embedding-3-large",))
-
 vectorstore.add_documents(docs_splitted)
 
+# CHAT GPT4.o model set up
 model = ChatOpenAI(model="gpt-4o", openai_api_key=os.environ['OPENAI_API_KEY'], temperature=0)
 
+# define PromptTemplate
 template = """Answer the question based on the context:{context}. Question: {question}"""
 prompt = ChatPromptTemplate.from_template(template)
 
-# Create the chain and run it
+# define retriever
 docsearch = PineconeVectorStore.from_documents(docs_splitted, OpenAIEmbeddings(openai_api_key=os.environ["OPENAI_API_KEY"], model="text-embedding-3-large",), index_name=index_name)
 retriever = docsearch.as_retriever(search_type="mmr")
 
+# create the chain and run it
 chain = (
   {"context": retriever, "question": RunnablePassthrough()}
   | prompt
   | model
   | StrOutputParser())
 
+# invoke chain with question
 question = "For each year from 2012-2021 which was the largest country by year where Shell paid the most royalties? Return Year-Country-Amount in USD"
 result = chain.invoke(question)
 
