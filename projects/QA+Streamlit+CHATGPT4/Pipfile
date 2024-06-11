@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 langchain = "*"
+langchain_openai = "*"
 typing_extensions = "*"
 beautifulsoup4 = "*"
 black = "*"
