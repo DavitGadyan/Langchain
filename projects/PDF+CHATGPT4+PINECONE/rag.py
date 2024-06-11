@@ -60,7 +60,8 @@ template = """Answer the question based on the context:{context}. Question: {que
 prompt = ChatPromptTemplate.from_template(template)
 
 # define retriever
-docsearch = PineconeVectorStore.from_documents(docs_splitted, OpenAIEmbeddings(openai_api_key=os.environ["OPENAI_API_KEY"], model="text-embedding-3-large",), index_name=index_name)
+# docsearch = PineconeVectorStore.from_documents(docs_splitted, OpenAIEmbeddings(openai_api_key=os.environ["OPENAI_API_KEY"], model="text-embedding-3-large",), index_name=index_name)
+docsearch = PineconeVectorStore.from_existing_index( embedding=OpenAIEmbeddings(openai_api_key=os.environ["OPENAI_API_KEY"], model="text-embedding-3-large",), index_name=index_name)
 retriever = docsearch.as_retriever(search_type="mmr")
 
 # create the chain and run it
