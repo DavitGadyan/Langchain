@@ -22,6 +22,7 @@ streamlit-chat = "*"
 tqdm = "*"
 langchain-pinecone = "*"
 python-dotenv = "*"
+urllib3="*"
 
 [dev-packages]
 
