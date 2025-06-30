@@ -2,7 +2,7 @@
 
 Welcome to the RAG Chatbot, your go-to assistant for researching blockchain & crypto laws in 2024 for various countries. 🌍📚
 
-📱 **Streamlit APP:** [Check it out here!](https://blockchain-crypto-law-2024-chatbot.streamlit.app)
+📱 **Streamlit APP:** [Check it out here!](https://rag-2025-crypto-blockchain4242.streamlit.app)
 
 🔗 **Source website:** [Global Legal Insights](https://www.globallegalinsights.com/practice-areas/blockchain-laws-and-regulations/)
 
