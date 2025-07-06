@@ -1,3 +1,4 @@
 creds.yaml
 *.txt
 **/.env
+.env
